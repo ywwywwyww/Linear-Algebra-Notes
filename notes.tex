@@ -1,0 +1,1148 @@
+\documentclass{article}
+
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{gensymb}
+\usepackage{fontspec}
+\usepackage{enumitem}
+\usepackage{amsthm}
+
+
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\ang}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\sign}[1]{\text{sign}(#1)}
+\newcommand{\bd}[1]{\textbf{#1}}
+
+\newcommand*\bmat[0]{\begin{matrix}}
+\newcommand*\emat[0]{\end{matrix}}
+\newcommand*\bbmat[0]{\begin{bmatrix}}
+\newcommand*\ebmat[0]{\end{bmatrix}}
+\newcommand*\bpmat[0]{\begin{pmatrix}}
+\newcommand*\epmat[0]{\end{pmatrix}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{lemma1}{Lemma}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{corollary1}{Corollary 1}
+\newtheorem*{corollary2}{Corollary 2}
+\newtheorem*{corollary3}{Corollary 3}
+\newtheorem*{definition1}{Definition}
+\newtheorem*{theorem1}{Theorem}
+\newtheorem*{definitions}{Definitions}
+\newtheorem*{exercise}{Exercise}
+
+\theoremstyle{plain} % just in case the style had changed
+\newcommand{\thistheoremname}{}
+\newtheorem*{genericthm}{\thistheoremname}
+\newenvironment{namedtheorem}[1]
+  {\renewcommand{\thistheoremname}{#1}%
+   \begin{genericthm}}
+  {\end{genericthm}}
+
+\usetikzlibrary{arrows,shapes,chains}
+
+
+\begin{document}
+
+\title{Linear Algebra Notes}
+
+\author{Wuwei Yuan}
+
+\maketitle
+\section{Vector Spaces}
+
+\subsection{Introduction}
+
+\begin{namedtheorem}{Parallelogram Law for Vector Addition}
+The sum of two vectors $x$ and $y$ that act at the same point $P$ is the vector beginning at $P$ that is
+represented by the diagonal of parallelogram having $x$ and $y$ as adjacent sides.
+\end{namedtheorem}
+
+\subsection{Vector Spaces}
+
+\begin{definition1}[Fieid]
+Formally, a field is a set $F$ together with two binary operations on $F$ called addition and multiplication. A binary operation on $F$ is a mapping $F \times  F \to  F$, that is, a correspondence that associates with each ordered pair of elements of $F$ a uniquely determined element of $F$. The result of the addition of $a$ and $b$ is called the sum of $a$ and $b$, and is denoted $a + b$. Similarly, the result of the multiplication of $a$ and $b$ is called the product of $a$ and $b$, and is denoted $ab$ or $a \cdot  b$. These operations are required to satisfy the following properties, referred to as field axioms. In these axioms, $a$, $b$, and $c$ are arbitrary elements of the field $F$.
+
+\begin{itemize}
+\item Associativity of addition and multiplication: $a + (b + c) = (a + b) + c$, and $a \cdot (b \cdot c) = (a \cdot b) \cdot c$.
+\item Commutativity of addition and multiplication: $a + b = b + a$, and $a \cdot b = b \cdot a$.
+\item Additive and multiplicative identity: there exist two different elements $0$ and $1$ in F such that $a + 0 = a$ and $a \cdot 1 = a$.
+\item Additive inverses: for every $a$ in $F$, there exists an element in $F$, denoted $-a$, called the additive inverse of $a$, such that $a + (-a) = 0$.
+\item Multiplicative inverses: for every $a \neq  0$ in $F$, there exists an element in $F$, denoted by $a^{-1}$ or $1/a$, called the multiplicative inverse of a, such that $a \cdot a^{-1} = 1$.
+\item Distributivity of multiplication over addition: $a \cdot (b + c) = (a \cdot b) + (a \cdot c)$.
+\end{itemize}
+\end{definition1}
+
+\begin{definitions}
+A vector space (or linear space) V over a field 2 F
+consists of a set on which two operations (called addition and scalar multiplication, respectively) are defined so that for each pair of elements x, y,
+in V there is a unique element x + y in V, and for each element a in F and
+each element x in V there is a unique element ax in V, such that the following
+conditions hold.
+\begin{enumerate}[label=(VS~\arabic*)]
+\item For all x, y in V, x + y = y + x (commutativity of addition).
+\item For all x, y, z in V, (x + y) + z = x + (y + z) (associativity of addition).
+\item There exists an element in V denoted by 0 such that x+0 = x for each x in V.
+\item For each element x in V there exists an element y in V such that x + y = 0
+\item For each element x in V, 1x = x.
+\item For each pair of elements a, b in F and each element x in V, (ab)x = a(bx).
+\item For each element a in F and each pair of elements x, y in V, a(x + y) = ax + ay.
+\item For each pair of elements a, b in F and each element x in V, (a + b)x = ax + bx.
+\end{enumerate}
+The elements x + y and ax are called the sum of x and y and the product of a and x, respectively.
+\end{definitions}
+
+The elements of the field F are called scalars and the elements of the vector space V are called vectors.
+
+\begin{theorem}[Cancellation Law for Vector Addition]
+If $x$, $y$, and $z$ are vectors in a vector space $V$ such that $x + z = y + z$, then $x = y$.
+\end{theorem}
+
+\begin{corollary1}
+The vector 0 described in (VS 3) is unique.
+\end{corollary1}
+
+\begin{corollary2}
+The vector y described in (VS 4) is unique.
+\end{corollary2}
+
+The vector 0 in (VS 3) is called the zero vector of V, and the vector y in
+(VS 4) (that is, the unique vector such that x+y = 0 ) is called the additive
+inverse of x and is denoted by −x.
+
+\begin{theorem}
+In any vector space V, the following statements are true:
+\begin{enumerate}[label=(\alph*)]
+\item 0x = 0 for each $x \in V$.
+\item (−a)x = −(ax) = a(−x) for each $a \in F$ and each $x \in V$.
+\item a0 = 0 for each $a \in  F$.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Subspaces}
+
+\begin{definition1}
+A subset W of a vector space V over a field F is called a
+subspace of V if W is a vector space over F with the operations of addition
+and scalar multiplication defined on V.
+\end{definition1}
+
+In any vector space V, note that V and $\{0\}$ are subspaces. The latter is called the zero subspace of V.
+
+\begin{theorem}
+Let V be a vector space and W a subset of V. Then W
+is a subspace of V if and only if the following three conditions hold for the
+operations defined in V.
+\begin{enumerate}[label=(\alph*)]
+\item $0 \in W$.
+\item $x + y \in W$ whenever $x \in W$ and $y \in W$.
+\item $cx \in W$ whenever $c \in F$ and $x \in W$.
+\end{enumerate}
+\end{theorem}
+
+The \bd{transpose} $A^t$ of an $m \times n$ matrix $A$ is the $n \times m$ matrix obtained from $A$ by interchanging the rows with the columns; that is, $(A^t)_{ij} = A_{ji}$.
+
+\begin{theorem}
+Any intersection of subspaces of a vector space V is a subspace of V.
+\end{theorem}
+
+\begin{definition1}
+If S1 and S2 are nonempty subsets of a vector space V, then the sum of S1 and S2, denoted S1 +S2, is the set $\{x+y : x \in S1 and y \in S2\}$.
+\end{definition1}
+
+\begin{definition1}
+A vector space V is called the direct sum of W1 and W2 if W1 and W2 are subspaces of V such that $W_1 \cap W_2 = \{0 \}$ and $W_1 + W_2 = V$. We denote that V is the direct sum of W1 and W2 by writing $V = W_1 \oplus W_2$.
+\end{definition1}
+
+\begin{exercise}
+W1 +W2 is a subspace of V that contains both W1 and W2.
+\end{exercise}
+
+\begin{exercise}
+Any subspace of V that contains both W1 and W2 must also contain W1 + W2.
+\end{exercise}
+
+\begin{definitions}
+Let W be a subspace of a vector space V over a field F. For any $v \in V$ the set $\{v\}+W = \{v+w: w \in W\}$ is called the \bd{coset} of W \bd{containing} v. It is customary to denote this coset by $v + W$ rather than $\{v\} + W$.
+
+Addition and scalar multiplication by scalars of F can be defined in the collection $S = \{v + W: v \in V\}$ of all cosets of W as follows:
+\begin{align}
+(v_1 + W)+(v_2 + W)=(v_1 + v_2) + W
+\end{align}
+for all $v_1, v_2 \in V$ and
+\begin{align}
+a(v + W) = av + W
+\end{align}
+for all $v \in V$ and $a \in F$.
+
+The set S is a vector space with the preceding operations. This vector space is called the \bd{quotient space of} V \bd{modulo} W and is denoted by V/W.
+\end{definitions}
+
+\subsection{Linear Combinations and Systems of Linear Equations}
+
+\begin{definition1}
+Let V be a vector space and S a nonempty subset of V. A vector v ∈ V is called a linear combination of vectors of S if there exist a finite number of vectors u1, u2,...,un in S and scalars a1, a2,...,an in F such that v = a1u1 + a2u2 + ··· + anun. In this case we also say that v is a linear combination of u1, u2,...,un and call a1, a2,...,an the coefficients of the linear combination.
+\end{definition1}
+
+\begin{definition1}
+Let S be a nonempty subset of a vector space V. The span of S, denoted span(S), is the set consisting of all linear combinations of the vectors in S. For convenience, we define $span(\varnothing) = \{0\}$.
+\end{definition1}
+
+\begin{theorem}
+The span of any subset S of a vector space V is a subspace of V. Moreover, any subspace of V that contains S must also contain the span of S.
+\end{theorem}
+
+\begin{definition1}
+A subset S of a vector space V generates (or spans) V if span(S) = V. In this case, we also say that the vectors of S generate (or span) V.
+\end{definition1}
+
+\subsection{Linear Dependence and Linear Independence}
+
+\begin{definition1}
+A subset S of a vector space V is called linearly dependent if there exist a finite number of distinct vectors u1, u2,...,un in S and scalars a1, a2,...,an, not all zero, such that
+\begin{align*}
+a1u1 + a2u2 + ··· + anun = 0 .
+\end{align*}
+In this case we also say that the vectors of S are linearly dependent.
+\end{definition1}
+
+For any vectors u1, u2,...,un, we have a1u1 + a2u2 + ··· + anun = 0 if a1 = a2 = ··· = an = 0. We call this the trivial representation of 0 as a linear combination of u1, u2,...,un.
+
+\begin{definition1}
+A subset S of a vector space that is not linearly dependent is called linearly independent. As before, we also say that the vectors of S are linearly independent.
+\end{definition1}
+
+The following facts about linearly independent sets are true in any vector
+space.
+\begin{enumerate}
+\item The empty set is linearly independent, for linearly dependent sets must be nonempty.
+\item A set consisting of a single nonzero vector is linearly independent. For if {u} is linearly dependent, then au = 0 for some nonzero scalar a. Thus
+\begin{align*}
+u = a^{-1}(au) = a^{-1}0 = 0 .
+\end{align*}
+\item A set is linearly independent if and only if the only representations of 0 as linear combinations of its vectors are trivial representations.
+\end{enumerate}
+
+\begin{theorem}
+Let V be a vector space, and let $S1 \subseteq S2 \subseteq V$. If S1 is linearly dependent, then S2 is linearly dependent.
+\end{theorem}
+
+\begin{corollary}
+Let V be a vector space, and let $S1 \subseteq S2 \subseteq V$. If S2 is linearly independent, then S1 is linearly independent.
+\end{corollary}
+
+\begin{theorem}
+Let S be a linearly independent subset of a vector space V, and let v be a vector in V that is not in S. Then $S \cup \{v\}$ is linearly dependent if and only if $v \in span(S)$.
+\end{theorem}
+
+\subsection{Base and Dimension}
+
+\begin{definition1}
+A \bd{basis} $\beta$ for a vector space V is a linearly independent subset of V that generates V. If $\beta$ is a basis for V, we also say that the vectors of $\beta$ form a basis for V.
+\end{definition1}
+
+\begin{theorem}
+Let V be a vector space and $\beta = \{u_1, u_2,\ldots,u_n\}$ be a subset of V. Then $\beta$ is a basis for V if and only if each $v \in V$ can be uniquely expressed as a linear combination of vectors of $\beta$, that is, can be expressed in
+the form
+\begin{align*}
+v = a_1u_1 + a_2u_2 + \cdots + a_nu_n
+\end{align*}
+for unique scalars $a_1, a_2,\ldots,a_n$.
+\end{theorem}
+
+\begin{theorem}
+If a vector space V is generated by a finite set S, then some subset of S is a basis for V. Hence V has a finite basis.
+\end{theorem}
+
+\begin{theorem}[Replacement Theorem] 
+Let V be a vector space that is generated by a set G containing exactly $n$ vectors, and let $L$ be a linearly independent subset of V containing exactly $m$ vectors. Then $m \leq n$ and there exists a subset $H$ of $G$ containing exactly $n - m$ vectors such that $L \cup H$ generates V.
+\end{theorem}
+
+\begin{corollary1}
+Let V be a vector space having a finite basis. Then every basis for V contains the same number of vectors.
+\end{corollary1}
+
+\begin{definitions}
+A vector space is called \bd{finite-dimensional} if it has a basis consisting of a finite number of vectors. The unique number of vectors in each basis for V is called the \bd{dimension} of V and is denoted by dim(V). A vector space that is not finite-dimensional is called \bd{infinite-dimensional}.
+\end{definitions}
+
+\begin{corollary2}
+Let V be a vector space with dimension n.
+\begin{enumerate}[label=(\alph*)]
+\item Any finite generating set for V contains at least n vectors, and a generating set for V that contains exactly n vectors is a basis for V.
+\item Any linearly independent subset of V that contains exactly n vectors is a basis for V.
+\item Every linearly independent subset of V can be extended to a basis for V.
+\end{enumerate}
+\end{corollary2}
+
+\begin{theorem}
+Let W be a subspace of a finite-dimensional vector space V. Then W is finite-dimensional and $dim(W) \leq dim(V)$. Moreover, if dim(W) = dim(V), then V = W.
+\end{theorem}
+
+\begin{corollary}
+If W is a subspace of a finite-dimensional vector space V, then any basis for W can be extended to a basis for V.
+\end{corollary}
+
+\subsection{Maximal Linearly Independent Subsets}
+
+\begin{definition1}
+Let F be a family of sets. A member M of F is called maximal (with respect to set inclusion) if M is contained in no member of F other than M itself.
+\end{definition1}
+
+\begin{definition1}
+A collection of sets C is called a chain (or nest or tower) if for each pair of sets A and B in C, either A ⊆ B or B ⊆ A.
+\end{definition1}
+
+\begin{namedtheorem}{Maximal Principle}
+ Let F be a family of sets. If, for each chain C⊆F, there exists a member of F that contains each member of C, then F contains a maximal member.
+\end{namedtheorem}
+
+\begin{definition1}
+Let S be a subset of a vector space V. A maximal linearly
+independent subset of S is a subset B of S satisfying both of the following
+conditions.
+\begin{enumerate}[label=(\alph*)]
+\item B is linearly independent.
+\item The only linearly independent subset of S that contains B is B itself
+\end{enumerate}
+\end{definition1}
+
+A basis β for a vector space V is a maximal linearly independent subset
+of V, because
+1. β is linearly independent by definition.
+2. If v ∈ V and v /∈ β, then β ∪ {v} is linearly dependent by Theorem 1.7
+(p. 39) because span(β) = V.
+
+\begin{theorem}
+Let V be a vector space and S a subset that generates V. If β is a maximal linearly independent subset of S, then β is a basis for V.
+\end{theorem}
+
+\begin{theorem}
+Let S be a linearly independent subset of a vector space
+V. There exists a maximal linearly independent subset of V that contains S.
+\end{theorem}
+
+\begin{corollary}
+Every vector space has a basis.
+\end{corollary}
+
+It can be shown, analogously to Corollary 1 of the replacement theorem (p. 46), that every basis for an infinite-dimensional vector space has the same cardinality.
+
+Also there are many important exercise. See textbook P62.
+
+\section{Linear Transformations and Matrices}
+
+\subsection{Linear Transformations, Null Spaces, and Ranges}
+
+\begin{definition1}
+Let V and W be vector spaces (over F). We call a function T: V → W a linear transformation from V to W if, for all $x, y \in V$ and $c \in F$, we have
+
+(a) T(x + y) = T(x) + T(y) and
+
+(b) T(cx) = cT(x).
+\end{definition1}
+
+We often simply call T \bd{linear}. The reader should verify the following
+properties of a function T: V → W. (See Exercise 7.)
+\begin{enumerate}
+\item If T is linear, then T(0 ) = 0 .
+\item T is linear if and only if T(cx + y) = cT(x) + T(y) for all $x, y \in V$ and
+$c \in F$.
+\item If T is linear, then T(x − y) = T(x) − T(y) for all x, y ∈ V.
+\item T is linear if and only if, for x1, x2,... ,xn ∈ V and a1, a2,... ,an ∈ F, we have 
+\begin{align*}
+T\left(\sum_{i=1}^n a_ix_i\right)=\sum_{i=1}^n a_iT(x_i)
+\end{align*}
+\end{enumerate}
+
+For vector spaces V and W (over F), we define the \bd{identity transformation} $I_V : V \to V$ by $I_V(x) = x$ for all $x \in V$ and the \bd{zero transformation} $T_0 : V \to W by T_0(x) = 0$ for all $x \to V$. It is clear that both of these transformations are linear. We often write I instead of $I_V$.
+
+\begin{definitions}
+Let V and W be vector spaces, and let T: V → W be linear.
+We define the \bd{null space} (or \bd{kernel}) N(T) of T to be the set of all vectors x in V such that T(x) = 0 ; that is, $N(T) = \{x \in V: T(x) = 0 \}$.
+
+We define the \bd{range} (or \bd{image}) R(T) of T to be the subset of W consisting of all images (under T) of vectors in V; that is, $R(T) = \{T(x): x \in V\}$.
+\end{definitions}
+
+\begin{theorem}
+Let V and W be vector spaces and T: V → W be linear. Then N(T) and R(T) are subspaces of V and W, respectively.
+\end{theorem}
+
+\begin{theorem}
+Let V and W be vector spaces, and let T: V → W be linear. If $\beta = \{v1, v2,...,vn\}$ is a basis for V, then $R(T) = span(T(\beta)) = span(\{T(v_1),T(v_2),...,T(v_n)\})$
+\end{theorem}
+
+It should be noted that Theorem 2.2 is true if $\beta$ is infinite, that is, $R(T) = span(\{T(v): v \in \beta\})$.
+
+\begin{definitions}
+Let V and W be vector spaces, and let $T: V \to W $be linear. If $N(T)$ and $R(T)$ are finite-dimensional, then we define the \bd{nullity} of T, denoted nullity(T), and the \bd{rank} of T, denoted rank(T), to be the dimensions of N(T) and R(T), respectively.
+\end{definitions}
+
+\begin{theorem}{Dimension Theorem}
+Let V and W be vector spaces, and let T: V → W be linear. If V is finite-dimensional, then nullity(T) + rank(T) = dim(V).
+\end{theorem}
+
+\begin{theorem}
+Let V and W be vector spaces, and let T: V → W be linear. Then T is one-to-one if and only if N(T) = {0 }.
+\end{theorem}
+
+\begin{theorem}
+Let V and W be vector spaces of equal (finite) dimension, and let T: V → W be linear. Then the following are equivalent.
+
+(a) T is one-to-one.
+
+(b) T is onto.
+
+(c) rank(T) = dim(V).
+\end{theorem}
+
+\begin{theorem}
+Let V and W be vector spaces over F, and suppose that $\{v_1, v_2,\ldots,v_n\}$ is a basis for V. For $w_1, w_2,\ldots,w_n$ in W, there exists exactly one linear transformation $T: V \to W$ such that $T(v_i) = w_i$ for $i = 1, 2,\ldots, n$.
+\end{theorem}
+
+\begin{corollary}
+Let V and W be vector spaces, and suppose that V has a finite basis $\{v_1, v_2,\ldots,v_n\}$. If U,T: V → W are linear and $U(v_i) = T(v_i)$ for i = 1, 2,...,n, then U = T.
+\end{corollary}
+
+\begin{definition1}
+Let V be a vector space and W1 and W2 be subspaces of
+V such that V = W1 ⊕ W2. (Recall the definition of direct sum given in the
+exercises of Section 1.3.) A function T: V → V is called the projection on
+W1 along W2 if, for x = x1 + x2 with x1 ∈ W1 and x2 ∈ W2, we have
+T(x) = x1.
+\end{definition1}
+
+\begin{definition1}
+Let V be a vector space, and let T: V → V be linear. A subspace W of V is said to be T-\bd{invariant} if $T(x) \in W$ for every $x \in W$, that is, $T(W) \in W$. If W is T-invariant, we define the restriction of T on W to be the function $T_W : W \to W$ defined by $T_W(x) = T(x)$ for all $x \in W$.
+\end{definition1}
+
+\subsection{The Matrix  Representationof a Linear Transformation}
+
+\begin{definition1}
+Let V be a finite-dimensional vector space. An \bd{ordered basis} for V is a basis for V endowed with a specific order; that is, an ordered basis for V is a finite sequence of linearly independent vectors in V that generates V.
+\end{definition1}
+
+For the vector space $F^n$, we call $\{e_1, e_2,\ldots,e_n\}$ the \bd{standard ordered basis} for $F^n$. Similarly, for the vector space $P_n(F)$, we call $\{1, x, \ldots , x_n\}$ the \bd{standard ordered basis} for $P_n(F)$.
+
+\begin{definition1}
+Let $β = \{u_1, u_2,\ldots,u_n\}$ be an ordered basis for a finite dimensional vector space V. For $x \in V$, let $a_1, a_2,\ldots,a_n$ be the unique scalars such that
+\begin{align*}
+x=\sum_{i=1}^n a_iu_i
+\end{align*}
+We define the \bd{coordinate vector of} x \bd{relative to} $\beta$, denoted $[x]_\beta$, by
+\begin{align*}
+[x]_\beta = \begin{pmatrix}a_1\\a_2\\\vdots\\a_n\end{pmatrix}
+\end{align*}
+\end{definition1}
+
+\begin{exercise}
+The correspondence $x \to [x]_\beta$ provides us with a linear transformation from V to $F^n$..
+\end{exercise}
+
+\begin{definition1}
+Suppose that V and W are finite-dimensional vector spaces with ordered bases $\beta = \{v_1, v_2, \beta ,v_n\}$ and $\gamma = \{w_1, w_2, \ldots ,w_m\}$, respectively. Let T: V → W be linear. Then for each j, $1 \leq  j \leq  n$, there exist unique scalars $a_{ij} \in F$, $1 \leq  i \leq  m$, such that
+\begin{align*}
+T(v_j ) =  \sum_{i=1}^m a_{ij}w_i~for~1\leq  j \leq n.
+\end{align*}
+Using the notation above, we call the $m\times n$ matrix A defined by $A_{ij} = a_{ij}$ the \bd{matrix representation of} T \bd{in the ordered bases} $\beta$ and $\gamma$ and write $A = [T]^\gamma_\beta$. If V = W and $\beta = \gamma$, then we write $A = [T]_\beta$.
+\end{definition1}
+
+\begin{definition1}
+Let T,U: V → W be arbitrary functions, where V and W are vector spaces over F, and let $a \in F$. We define T + U: V → W by
+(T + U)(x) = T(x) + U(x) for all $x \in V$, and $aT: V → W by (aT)(x) = aT(x)$ for all $x \in V$.
+\end{definition1}
+
+\begin{theorem}
+Let V and W be vector spaces over a field F, and let T,U: V → W be linear.
+
+(a) For all $a \in F$, aT + U is linear.
+
+(b) Using the operations of addition and scalar multiplication in the preceding definition, the collection of all linear transformations from V to W is a vector space over F.
+\end{theorem}
+
+\begin{definitions}
+Let V and W be vector spaces over F. We denote the vector space of all linear transformations from V into W by $\mathcal L(V, W)$. In the case that V = W, we write $\mathcal L(V)$ instead of $\mathcal L(V, W)$.
+\end{definitions}
+
+\begin{theorem}
+Let V and W be finite-dimensional vector spaces with ordered bases $\beta$ and $\gamma$, respectively, and let T,U: V → W be linear transformations. Then
+
+(a) $[T + U]^\gamma_\beta = [T]^\gamma_\beta+ [U]^\gamma_\beta$ and
+
+(b) $[aT]^\gamma_\beta = a[T]^\gamma_\beta$ for all scalars a.
+\end{theorem}
+
+\subsection {Composition of Linear Transformations and Matrix Multiplication}
+
+\begin{definition1}
+Let A, B, and C be sets and f : A → B and g : B → C be functions. By following f with g, we obtain a function g ◦ f : A → C called the \bd{composite} of g and f. Thus (g ◦ f)(x) = g(f(x)) for all $x \in A$. 
+\end{definition1}
+
+\begin{theorem}
+Let V, W, and Z be vector spaces over the same field F, and let T: V → W and U: W → Z be linear. Then UT: V → Z is linear.
+\end{theorem}
+
+\begin{theorem}
+Let V be a vector space. Let $T,U1,U2 \in L(V)$. Then
+\begin{enumerate}[label=(\alph*)]
+\item $T(U_1 + U_2) = TU_1 + TU_2$ and $(U_1 + U_2)T = U_1T + U_2T$
+\item $T(U_1U_2)=(TU_1)U_2$
+(c) TI = IT = T
+(d) a(U1U2)=(aU1)U2 = U1(aU2) for all scalars a
+\end{enumerate}
+\end{theorem}
+
+\begin{definition1}
+Let A be an m × n matrix and B be an n × p matrix. We define the product of A and B, denoted AB, to be the m × p matrix such
+that
+\begin{align*}
+(AB)_{ij}=\sum_{k=1}^n A_{ik}B_{kj}~for~1\leq i\leq m, ~1\leq j\leq p
+\end{align*}
+\end{definition1}
+
+\begin{theorem}
+Let V, W, and Z be finite-dimensional vector spaces with ordered bases $\alpha$, $\beta$, and $\gamma$, respectively. Let T: V → W and U: W → Z be linear transformations. Then
+\begin{align*}
+[UT]_\alpha^\gamma=[U]_\beta^\gamma[T]_\alpha^\beta
+\end{align*}
+\end{theorem}
+
+\begin{corollary}
+Let V be a finite-dimensional vector space with an ordered basis $\beta$. Let $T,U \in L(V)$. Then $[UT]_\beta = [U]_\beta[T]_\beta$.
+\end{corollary}
+
+\begin{definitions}
+We define the \bd{Kronecker delta} $\delta_{ij}$ by $\delta_{ij} = 1$ if $i = j$ and $\delta_{ij} = 0$ if $i \neq j$. The n × n \bd{identity matrix} $I_n$ is defined by $(I_n)_{ij} = \delta_{ij}$ .
+\end{definitions}
+
+\begin{theorem}
+Let A be an m × n matrix, B and C be n × p matrices, and D and E be q × m matrices. Then
+\begin{enumerate}[label=(\alph*)]
+\item A(B + C) = AB + AC and (D + E)A = DA + EA.
+\item a(AB)=(aA)B = A(aB) for any scalar a.
+\item $I_mA = A = AI_n$.
+\item If V is an n-dimensional vector space with an ordered basis $\beta$, then $[I_V]_\beta = I_n$.
+\end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+Let A be an m × n matrix, B1, B2,...,Bk be n × p matrices, C1, C2,...,Ck be q × m matrices, and a1, a2,...,ak be scalars. Then
+\begin{align*}
+A\left(\sum_{i=1}^ka_iB_i\right)=\sum{i=1}^ka_iAB_i
+\end{align*}
+and
+\begin{align*}
+\left(\sum_{i=1}^ka_iC_i\right)A=\sum{i=1}^na_iC_iA
+\end{align*}
+\end{corollary}
+
+\begin{theorem}
+Let A be an m × n matrix and B be an n × p matrix. For each j (1 ≤ j ≤ p) let uj and vj denote the jth columns of AB and B, respectively. Then
+
+(a) $u_j = Av_j$
+
+(b) $v_j = Be_j$ , where $e_j$ is the jth standard vector of $F^p$.
+
+\end{theorem}
+
+It follows (see Exercise 14) from Theorem 2.13 that column j of AB is a linear combination of the columns of A with the coefficients in the linear combination being the entries of column j of B. An analogous result holds for rows; that is, row i of AB is a linear combination of the rows of B with the coefficients in the linear combination being the entries of row i of A.
+
+\begin{theorem}
+Let V and W be finite-dimensional vector spaces having ordered bases $\beta$ and $\gamma$, respectively, and let T: V → W be linear. Then, for each $u \in V$, we have
+\begin{align*}
+[T(u)]_\gamma=[T]_\beta^\gamma[u]_\beta
+\end{align*}
+\end{theorem}
+
+\begin{definition1}
+Let A be an m × n matrix with entries from a field F. We denote by $L_A$ the mapping $L_A : F_n \to F_m$ defined by $L_A(x) = Ax$ (the matrix product of A and x) for each column vector $x \in F_n$. We call $L_A$ a \bd{left-multiplication transformation}.
+\end{definition1}
+
+\begin{theorem}
+Let A be an m × n matrix with entries from F. Then the left-multiplication transformation $L_A : F_n \to F_m$ is linear. Furthermore, if B is any other m × n matrix (with entries from F) and $\beta$ and $\gamma$ are the standard ordered bases for $F_n$ and $F_m$, respectively, then we have the following properties.
+\begin{enumerate}[label=(\alph*)]
+\item $[L_A]_\beta^\gamma = A$.
+\item $L_A = L_B$ if and only if $A = B$.
+\item $L_{A+B} = L_A + L_B$ and $L_{aA} = aL_A$ for all $a \in F$.
+\item If $T: F^n \to F^m$ is linear, then there exists a unique m×n matrix C such that $T = L_C$ . In fact, $C = [T]_\beta^\gamma$
+\item If E is an n × p matrix, then $L_{AE} = L_AL_E$.
+\item If m = n, then $L_{I_n} = I_{F_n}$ .
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+Let A, B, and C be matrices such that A(BC) is defined. Then (AB)C is also defined and A(BC)=(AB)C; that is, matrix multiplication is associative.
+\end{theorem}
+
+\subsection{Invertibility and Isomorphisms}
+
+\begin{definition1}
+Let V and W be vector spaces, and let T: V → W be linear. A function U: W → V is said to be an \bd{inverse} of T if $TU = I_W$ and $UT = I_V$. If T has an inverse, then T is said to be \bd{invertible}. As noted in Appendix B, if T is invertible, then the inverse of T is unique and is denoted by $T^{-1}$.
+\end{definition1}
+
+The following facts hold for invertible functions T and U.
+
+1. $(TU)^{-1} = U^{-1}T^{-1}$.
+
+2. $(T^{-1})^{-1} = T$; in particular, $T^{-1}$ is invertible.
+
+We often use the fact that a function is invertible if and only if it is both
+one-to-one and onto. We can therefore restate Theorem 2.5 as follows.
+
+3. Let T: V → W be a linear transformation, where V and W are finitedimensional spaces of equal dimension. Then T is invertible if and only if rank(T) = dim(V).
+
+\begin{theorem}
+Let V and W be vector spaces, and let T: V → W be linear and invertible. Then $T^{-1} : W \to V$ is linear.
+\end{theorem}
+
+\begin{definition1}
+Let A be an n × n matrix. Then A is invertible if there exists an n × n matrix B such that AB = BA = I.
+\end{definition1}
+
+The matrix B is called the \bd{inverse} of A and is denoted by $A^{-1}$.
+
+\begin{lemma1}
+Let T be an invertible linear transformation from V to W. Then V is finite-dimensional if and only if W is finite-dimensional. In this case, dim(V) = dim(W).
+\end{lemma1}
+
+\begin{theorem}
+Let V and W be finite-dimensional vector spaces with ordered bases $\beta$ and $\gamma$, respectively. Let T: V → W be linear. Then T is invertible if and only if $[T]_\beta^\gamma$ is invertible. Furthermore, $[T^{-1}]_\gamma^\beta = ([T]_\beta^\gamma)^{-1}$.
+\end{theorem}
+
+\begin{corollary1}
+Let V be a finite-dimensional vector space with an ordered basis $\beta$, and let T: V → V be linear. Then T is invertible if and only if $[T]_\beta$ is invertible. Furthermore, $[T^{-1}]_\beta = ([T]_\beta)^{-1}$.
+\end{corollary1}
+
+\begin{corollary2}
+Let A be an n × n matrix. Then A is invertible if and only if $L_A$ is invertible. Furthermore, $(L_A)^{-1} = L_{A^{-1}}$.
+\end{corollary2}
+
+\begin{definitions}
+Let V and W be vector spaces. We say that V is \bd{isomorphic} to W if there exists a linear transformation T: V → W that is invertible. Such a linear transformation is called an \bd{isomorphism} from V onto W.
+\end{definitions}
+
+\begin{theorem}
+Let V and W be finite-dimensional vector spaces (over the same field). Then V is isomorphic to W if and only if dim(V) = dim(W).
+\end{theorem}
+
+\begin{corollary}
+Let V be a vector space over F. Then V is isomorphic to $F_n$ if and only if dim(V) = n.
+\end{corollary}
+
+\begin{theorem}
+Let V and W be finite-dimensional vector spaces over F of dimensions n and m, respectively, and let β and γ be ordered bases for V and W, respectively. Then the function $\Phi: \mathcal L(V, W) → M_{m\times n}(F)$, defined by $\Phi(T)=[T]_\beta^\gamma$ for $T \in L(V, W)$, is an isomorphism.
+\end{theorem}
+
+\begin{corollary}
+Let V and W be finite-dimensional vector spaces of dimensions n and m, respectively. Then $\mathcal L(V, W)$ is finite-dimensional of dimension mn.
+\end{corollary}
+
+\begin{definition1}
+Let $\beta$ be an ordered basis for an n-dimensional vector space V over the field F. The \bd{standard representation of} V \bd{with respect to} $\beta$ is the function $\phi_\beta : V \to F^n$ defined by $\phi_\beta(x)=[x]_\beta$ for each $x \beta V$.
+\end{definition1}
+
+\begin{theorem}
+For any finite-dimensional vector space V with ordered basis $\beta$, $\phi_\beta$ is an isomorphism.
+\end{theorem}
+
+\subsection{The Change of Coordinate Matrix}
+
+\begin{theorem}
+Let $\beta$ and $\beta^\prime$ be two ordered bases for a finite-dimensional vector space V, and let $Q = [I_V]^\beta_{\beta^\prime}$. Then
+
+(a) Q is invertible.
+
+(b) For any $v \in V$, $[v]_\beta = Q[v]_{\beta^\prime}$ .
+\end{theorem}
+
+The matrix $Q = [I_V]^\beta_{\beta^\prime}$ defined in Theorem 2.22 is called a \bd{change of coordinate matrix}. Because of part (b) of the theorem, we say that Q \bd{changes} $\beta^\prime$\bd{-coordinates into} $\beta$\bd{-coordinates}. Observe that if $\beta = \{x_1, x_2,\ldots ,x_n\}$ and $\beta^\prime = \{x_1^\prime, x_2^\prime,\ldots,x_n^\prime\}$ then
+\begin{align*}
+x^\prime_j = \sum_{i=1}^n Q_{ij}x_i
+\end{align*}
+for j = 1, 2,... ,n; that is, the jth column of Q is $[x^\prime_j]_\beta$.
+
+Notice that if Q changes $\beta^\prime$-coordinates into $\beta$-coordinates, then $Q^{-1}$ changes $\beta$-coordinates into $\beta^\prime$-coordinates.
+
+For the remainder of this section, we consider only linear transformations that map a vector space V into itself. Such a linear transformation is called a \bd{linear operator} on V. 
+
+\begin{theorem}
+Let T be a linear operator on a finite-dimensional vector space V, and let $\beta$ and $\beta^\prime$  be ordered bases for V. Suppose that Q is the change of coordinate matrix that changes $\beta^\prime$-coordinates into $\beta$-coordinates. Then
+\begin{align*}
+[T]_{\beta^\prime}=Q^{-1}[T]_\beta Q
+\end{align*}
+\end{theorem}
+
+\begin{corollary}
+Let $A \in M_{n\times n}(F)$, and let $\gamma$ be an ordered basis for $F^n$. Then $[L_A]\gamma = Q^{-1}AQ$, where $Q$ is the $n \times n$ matrix whose jth column is the jth vector of $\gamma$.
+\end{corollary}
+
+\begin{definition1}
+Let A and B be matrices in $M_{n\times n}(F)$. We say that B is \bd{similar} to A if there exists an invertible matrix Q such that $B=Q^{-1}AQ$.
+\end{definition1}
+
+\subsection {Dual Spaces}
+
+In this section, we are concerned exclusively with linear transformations from a vector space V into its field of scalars F, which is itself a vector space of dimension 1 over F. Such a linear transformation is called a \bd{linear functional} on V. We generally use the letters f, g, h,... to denote linear functionals.
+
+Let V be a finite-dimensional vector space, and let $\beta = \{x_1, x_2,\ldots,x_n\}$ be an ordered basis for V. For each i = 1, 2,...,n, define $f_i(x) = a_i$, where
+\begin{align*}
+[x]_\beta = \bpmat a_1\\a_2\\ \vdots\\a_n\epmat
+\end{align*}
+is the coordinate vector of x relative to $\beta$. Then $f_i$ is a linear functional on V called the \bd{$i$th coordinate function with respect to the basis} $\beta$. Note that $f_i(x_j) = \delta_{ij}$ , where $\delta_{ij}$ is the Kronecker delta.
+
+\begin{definition1}
+For a vector space V over F, we define the \bd{dual space} of V to be the vector space $\mathcal L(V, F)$, denoted by $V^∗$.
+\end{definition1}
+
+Hence by Theorem 2.19, V and $V^∗$ are isomorphic. We also define the \bd{double dual} $V^{∗∗}$ of V to be the dual of $V^∗$.
+
+\begin{theorem}
+Suppose that V is a finite-dimensional vector space with the ordered basis $\beta = \{x_1, x_2,\ldots,x_n\}$. Let $f_i (1 \leq  i \leq n)$ be the ith coordinate function with respect to $\beta$ as just defined, and let $\beta^∗ = \{f_1, f_2,\ldots, f_n\}$. Then $\beta^*$ is an ordered basis for $V^∗$, and, for any $f \in V^∗$, we have
+\begin{align*}
+f=\sum_{i=1}^n f(x_i)f_i
+\end{align*}
+\end{theorem}
+
+\begin{definition1}
+Using the notation of Theorem 2.24, we call the ordered basis $\beta^∗ = \{f_1, f_2,\ldots, f_n\}$ of $V^∗$ that satisfies $f_i(x_j) = \delta_{ij} (1 \leq  i, j \leq n)$ the \bd{dual basis} of $\beta$.
+\end{definition1}
+
+\begin{theorem}
+Let V and W be finite-dimensional vector spaces over F with ordered bases $\beta$ and $\gamma$, respectively. For any linear transformation T: V → W, the mapping $T^t : W^* \to V^∗$ defined by $T^t(g) = gT$ for all $g\in W^*$ is a linear transformation with the property that $[T^t]_{\gamma^*}^{\beta^*}={([T]_\beta^\gamma)}^t$.
+\end{theorem}
+
+The linear transformation $T^t$ defined in Theorem 2.25 is called the \bd{transpose} of T. It is clear that $T^t$ is the unique linear transformation U such that $[U]_{\gamma^*}^{\beta^*}=([T]_\beta^\gamma)^t$.
+
+For a vector $x \in V$, we define $\hat{x}: V^∗ \to F$ by $\hat{x}(f) = f(x)$ for every $f \in V^∗$. It is easy to verify that $\hat{x}$ is a linear functional on $V^∗$, so $\hat{x} \in V^{∗∗}$.
+
+\begin{lemma1}
+Let V be a finite-dimensional vector space, and let $x \in V$. If $\hat{x}(f)=0$ for all $f \in V^∗$, then $x = 0$.
+\end{lemma1}
+
+\begin{theorem}
+Let V be a finite-dimensional vector space, and define $\Psi: V \to V^{∗∗}$ by $\Psi(x) = \hat{x}$. Then $\Psi$ is an isomorphism.
+\end{theorem}
+
+\begin{corollary}
+Let V be a finite-dimensional vector space with dual space $V^∗$. Then every ordered basis for $V^∗$ is the dual basis for some basis for V.
+\end{corollary}
+
+\begin{definition1}
+V denotes a finite-dimensional vector space over F. For every subset S of V, define the \bd{annihilator} $S^0$ of S as
+\begin{align*}
+S^0 = \{ f \in V^* : f(x) = 0~for~all~x~\in S\}
+\end{align*}
+\end{definition1}
+
+\subsection{Homogeneous Linear Differential Equations with Constant Coefficients}
+
+Gugugu.
+
+\section {Elementary Matrix Operations and Systems of Linear Equations}
+
+\subsection{Elementary Matrix Operations and Elementary Matrices}
+
+\begin{definitions}
+Let A be an m × n matrix. Any one of the following three operations on the rows [columns] of A is called an \bd{elementary row [column] operation}:
+\begin{enumerate}[label=(\arabic*)]
+  \item interchanging any two rows [columns] of A;
+  \item multiplying any row [column] of A by a nonzero scalar;
+  \item adding any scalar multiple of a row [column] of A to another row [column].
+\end{enumerate}
+\end{definitions}
+
+Any of these three operations is called an \bd{elementary operation}. Elementary operations are of \bd{type 1}, \bd{type 2}, or \bd{type 3} depending on whether they are obtained by (1), (2), or (3).
+
+\begin{definition1}
+  An n × n \bd{elementary matrix} is a matrix obtained by performing an elementary operation on $I_n$. The elementary matrix is said to be of \bd{type 1}, \bd{2}, or \bd{3} according to whether the elementary operation performed on In is a type 1, 2, or 3 operation, respectively.
+\end{definition1}
+
+\begin{theorem}
+  Let $A \in M_{m\times n}(F)$, and suppose that B is obtained from A by performing an elementary row [column] operation. Then there exists an m × m [n × n] elementary matrix E such that B = EA [B = AE]. In fact, E is obtained from $I_m [I_n]$ by performing the same elementary row [column] operation as that which was performed on A to obtain B. Conversely, if E is an elementary m × m [n × n] matrix, then EA [AE] is the matrix obtained from A by performing the same elementary row [column] operation as that which produces E from Im [In].
+\end{theorem}
+
+\begin{theorem}
+  Elementary matrices are invertible, and the inverse of an elementary matrix is an elementary matrix of the same type.
+\end{theorem}
+
+\subsection{The Rank of a Matrix and Matrix inverses}
+
+\begin{definition1}
+  If $A \in M_{m\times n}(F)$, we define the \bd{rank} of A, denoted rank(A), to be the rank of the linear transformation $L_A : F_n \to F_m$.
+\end{definition1}
+
+Many results about the rank of a matrix follow immediately from the corresponding facts about a linear transformation. An important result of this type, which follows from Fact 3 (p. 100) and Corollary 2 to Theorem 2.18 (p. 102), is that an n × n matrix is invertible if and only if its rank is n.
+
+\begin{theorem}
+  Let $T: V \to W$ be a linear transformation between finitedimensional vector spaces, and let $\beta$ and $\gamma$ be ordered bases for V and W, respectively. Then $rank(T) = rank([T]_{\beta}^\gamma)$.
+\end{theorem}
+
+\begin{theorem}
+  Let A be an m × n matrix. If P and Q are invertible
+m × m and n × n matrices, respectively, then
+\begin{enumerate}[label=(\alph*)]
+  \item rank(AQ) = rank(A),
+  \item rank(PA) = rank(A),
+and therefore,
+  \item rank(PAQ) = rank(A).
+\end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+  Elementary row and column operations on a matrix are rankpreserving
+\end{corollary}
+
+\begin{theorem}
+  The rank of any matrix equals the maximum number of its linearly independent columns; that is, the rank of a matrix is the dimension of the subspace generated by its columns.
+\end{theorem}
+
+\begin{theorem}
+  Let A be an m × n matrix of rank r. Then $r \leq m, r \leq n$, and, by means of a finite number of elementary row and column operations, A can be transformed into the matrix
+  \begin{align*}
+    D=\bpmat I_r&O_1\\O_2&O_3\epmat
+  \end{align*}
+, where $O_1, O_2$, and $O_3$ are zero matrices. Thus $D_{ii} = 1$ for $i \leq r$ and $D_{ij} = 0$ otherwise.
+\end{theorem}
+
+\begin{corollary1}
+  Let A be an m × n matrix of rank r. Then there exist invertible matrices B and C of sizes m × m and n×n,  espectively, such that D = BAC, where
+	\begin{align*}
+    D=\bpmat I_r&O_1\\O_2&O_3\epmat
+  \end{align*}
+is the m × n matrix in which $O_1$, $O_2$, and $O_3$ are zero matrices.
+\end{corollary1}
+
+\begin{corollary2}
+  Let A be an m × n matrix. Then
+  \begin{enumerate}[label=(\alph*)]
+    \item $rank(A^t) = rank(A)$.
+    \item The rank of any matrix equals the maximum number of its linearly independent rows; that is, the rank of a matrix is the dimension of the subspace generated by its rows.
+    \item The rows and columns of any matrix generate subspaces of the same dimension, numerically equal to the rank of the matrix.
+  \end{enumerate}
+\end{corollary2}
+
+\begin{corollary3}
+  Every invertible matrix is a product of elementary matrices.
+\end{corollary3}
+
+\begin{theorem}
+  Let T: V → W and U: W → Z be linear transformations on finite-dimensional vector spaces V, W, and Z, and let A and B be matrices such that the product AB is defined. Then
+  \begin{enumerate}[label=(\alph*)]
+    \item $rank(UT) \leq rank(U)$.
+    \item $rank(UT) \leq rank(T)$.
+    \item $rank(AB) \leq rank(A)$.
+    \item $rank(AB) \leq rank(B)$.
+  \end{enumerate}
+\end{theorem}
+
+\subsubsection*{The Inverse of a Matrix}
+
+\begin{definition1}
+  Let A and B be m × n and m × p matrices, respectively. By the \bd{augmented matrix} (A|B), we mean the m × (n + p) matrix (A B), that is, the matrix whose first n columns are the columns of A, and whose last p columns are the columns of B.
+\end{definition1}
+
+Being able to test for invertibility and compute the inverse of a matrix allows us, with the help of Theorem 2.18 (p. 101) and its corollaries, to test for invertibility and compute the inverse of a linear transformation. The next example demonstrates this technique.
+
+\subsection{Systems of Linear Equations - Theoretical Aspects}
+
+The system of equations
+
+\begin{align*}
+  (S)
+\begin{cases}
+  a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n=b_1\\
+  a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n=b_2\\
+  \vdots\\
+  a_{m1}x_1+a_{m2}x_2+\cdots+a_{mn}x_n=b_m\\
+\end{cases}
+\end{align*}
+
+where $a_{ij}$ and $b_i$ ($1 \leq i \leq m$ and $1 \leq j \leq n$) are scalars in a field F and $x_1, x_2,\ldots,x_n$ are n variables taking values in $F$, is called a \bd{system of} $m$ \bd{linear equations in} $n$ \bd{unknowns over the field} $F$.
+
+The $m \times n$ matrix
+\begin{align*}
+  A=\bpmat
+  a_{11}&a_{12}&\cdots&a_{1n}\\
+  a_{21}&a_{22}&\cdots&a_{2n}\\
+  \vdots&\vdots&&\vdots\\
+  a_{m1}&a_{m2}&\cdots&a_{1m}
+  \epmat
+\end{align*}
+
+is called the \bd{coefficient matrix} of the system (S).
+
+If we let
+\begin{align*}
+  x=\bpmat x_1\\x_2\\\vdots\\x_n\epmat~and~b=\bpmat b_1\\b_2\\\vdots\\b_n\epmat
+\end{align*}
+
+then the system (S) may be rewritten as a single matrix equation
+
+\begin{align*}
+  Ax=b
+\end{align*}
+
+A \bd{solution} to the system (S) is an n-tuple
+\begin{align*}
+  s=\bpmat s_1\\s_2\\\vdots\\s_n\epmat \in F^n
+\end{align*}
+
+such that $As = b$. The set of all solutions to the system (S) is called the \bd{solution set} of the system. System (S) is called \bd{consistent} if its solution set is nonempty; otherwise it is called \bd{inconsistent}.
+
+We see that a system of linear equations can have one, many, or no solutions.
+
+\begin{definitions}
+  A system Ax = b of m linear equations in n unknowns is said to be \bd{homogeneous} if b = 0 . Otherwise the system is said to be \bd{nonhomogeneous}.
+\end{definitions}
+
+\begin{theorem}
+  Let Ax = 0 be a homogeneous system of m linear equations in n unknowns over a field F. Let K denote the set of all solutions to Ax = 0 . Then $K = N(L_A)$; hence K is a subspace of $F^n$ of dimension $n − rank(L_A) = n − rank(A)$.
+\end{theorem}
+
+\begin{corollary}
+  If m<n, the system Ax = 0 has a nonzero solution.
+\end{corollary}
+
+We refer to the equation Ax = 0 as the \bd{homogeneous system corresponding to} Ax = b.
+
+\begin{theorem}
+  Let K be the solution set of a system of linear equations Ax = b, and let $K_H$ be the solution set of the corresponding homogeneous system Ax = 0 . Then for any solution s to Ax = b
+  \begin{align*}
+    K = \{s\} + K_H = \{s + k : k \in K_H\}
+  \end{align*}
+\end{theorem}
+
+\begin{theorem}
+  Let Ax = b be a system of n linear equations in n unknowns. If A is invertible, then the system has exactly one solution, namely, $A^{-1}b$. Conversely, if the system has exactly one solution, then A is invertible.
+\end{theorem}
+
+The matrix (A|b) is called the \bd{augmented matrix} of the system Ax = b.
+
+\begin{theorem}
+  Let Ax = b be a system of linear equations. Then the system is consistent if and only if rank(A) = rank(A|b).
+\end{theorem}
+
+\begin{theorem}
+  
+\end{theorem}
+
+\subsection{Systems of Linear Equations - Computational Aspects}
+
+\begin{definition1}
+  Two systems of linear equations are called equivalent if they have the same solution set.
+\end{definition1}
+
+\begin{theorem}
+  Let Ax = b be a system of m linear equations in n unknowns, and let C be an invertible $m \times m$ matrix. Then the system (CA)x = Cb is equivalent to Ax = b.
+\end{theorem}
+
+\begin{corollary}
+  Let Ax = b be a system of m linear equations in n unknowns. If $(A^\prime|b^\prime)$ is obtained from $(A|b)$ by a finite number of elementary row operations, then the system $A^\prime x = b^\prime$ is equivalent to the original system.
+\end{corollary}
+
+\begin{definition1}
+  A matrix is said to be in \bd{reduced row echelon form} if the following three conditions are satisfied.
+
+(a) Any row containing a nonzero entry precedes any row in which all the entries are zero (if any).
+
+(b) The first nonzero entry in each row is the only nonzero entry in its column.
+
+(c) The first nonzero entry in each row is 1 and it occurs in a column to the right of the first nonzero entry in the preceding row.
+\end{definition1}
+
+It can be shown (see the corollary to Theorem 3.16) that the reduced row echelon form of a matrix is unique.
+
+The procedure described on pages 183–185 for reducing an augmented matrix to reduced row echelon form is called \bd{Gaussian elimination}. It consists of two separate parts.
+
+1. In the forward pass (steps 1-5), the augmented matrix is transformed into an upper triangular matrix in which the first nonzero entry of each row is 1, and it occurs in a column to the right of the first nonzero entry of each preceding row.
+
+2. In the backward pass or back-substitution (steps 6-7), the upper triangular matrix is transformed into reduced row echelon form by making the first nonzero entry of each row the only nonzero entry of its column.
+
+\begin{theorem}
+  Gaussian elimination transforms any matrix into its reduced row echelon form.
+\end{theorem}
+
+To solve a system for which the augmented matrix is in reduced row echelon form, divide the variables into two sets. The first set consists of those variables that appear as leftmost variables in one of the equations of the system (in this case the set is $\{x_1, x_2, x_4\}$). The second set consists of all the remaining variables (in this case, $\{x_3, x_5\}$). To each variable in the second set, assign a parametric value $t_1, t_2,\ldots (x_3 = t_1, x_5 = t_2)$, and then solve for the variables of the first set in terms of those in the second set. See page 188 of the textbook.
+
+\begin{theorem}
+  Let Ax = b be a system of r nonzero equations in n unknowns. Suppose that rank(A) = rank(A|b) and that (A|b) is in reduced row echelon form. Then  
+  
+  (a) rank(A) = r.
+
+(b) If the general solution obtained by the procedure above is of the form
+\begin{align*}
+s = s_0 + t_1u_1 + t_2u_2 + \cdots + t_{n−r}u_{n−r},
+\end{align*}
+then $\{u_1, u_2,\ldots,u_{n−r}\}$ is a basis for the solution set of the corresponding homogeneous system, and s0 is a solution to the original system.
+\end{theorem}
+
+\begin{theorem}
+  Let A be an m × n matrix of rank r, where r > 0, and let B be the reduced row echelon form of A. Then
+
+(a) The number of nonzero rows in B is r.
+
+(b) For each i = 1, 2, . . . , r, there is a column $b_{j_i}$ of B such that $b_{j_i} = e_i$.
+
+(c) The columns of A numbered $j_1, j_2,\ldots,j_r$ are linearly independent.
+
+(d) For each k = 1, 2,...n, if column k of B is $d_1e_1 +d_2e_2 +\cdots+d_re_r$, then column k of A is $d_1a_{j_1} + d_2a_{j_2} + \cdots + d_ra_{j_r}$.
+\end{theorem}
+
+\begin{corollary}
+  The reduced row echelon form of a matrix is unique.
+\end{corollary}
+
+\section{Determinants}
+
+\subsubsection{Determinants of Order 2}
+
+\begin{definition1}
+  If 
+\begin{align*}
+  A=\bpmat a&b\\c&d\epmat
+\end{align*}
+is a $2\times 2$ matrix with entries from a field F, then we define the \bd{determinant} of A, denoted $\det(A)$ or $|A|$, to be the scalar ad − bc.
+\end{definition1}
+
+Since $\det(A + B) \neq \det(A) + \det(B)$, the function $\det: M_{2\times 2}(R) \to R$ is not a linear transformation.
+
+\begin{theorem}
+  The function $\det: M_{2\times 2}(F) \to F$ is a linear function of each row of a 2 × 2 matrix when the other row is held fixed. That is, if u, v, and w are in $F^2$ and k is a scalar, then
+  \begin{align*}
+    \det\bpmat u+kv\\w\epmat =\det\bpmat u\\w\epmat +k\det \bpmat v\\w\epmat
+  \end{align*}
+  and
+  \begin{align*}
+    \det\bpmat w\\u+kv\epmat = \det\bpmat w\\u\epmat +k\det\bpmat w\\v\epmat
+  \end{align*}
+\end{theorem}
+
+\begin{theorem}
+  Let $A \in M_{2\times 2}(F)$. Then the determinant of A is nonzero if and only if A is invertible. Moreover, if A is invertible, then
+  \begin{align*}
+    A^{-1}=\frac{1}{\det(A)}\bpmat A_{22}&-A_{12}\\-A_{21}&A_{11}\epmat
+  \end{align*}
+\end{theorem}
+
+\paragraph{The Area of a Parallelogram}
+
+\subsection{Determinants of Order n}
+
+Given $A \in M_{n\times n}(F)$, for $n \geq 2$, denote the $(n−1)\times (n−1)$ matrix obtained from A by deleting row $i$ and column $j$ by $\tilde{A}_{ij}$ . 
+
+\begin{definitions}
+  Let $A \in M_{n\times n}(F)$. If n = 1, so that $A = (A_{11})$, we define $\det(A) = A_{11}$. For $n \geq 2$, we define $\det(A)$ recursively as
+  \begin{align*}
+    \det(A) = \sum_{j=1}^n {(-1)}^{1+j}A_{1j}\cdot \det(\tilde{A}_{1j})
+  \end{align*}
+  The scalar $\det(A)$ is called the \bd{determinant} of A and is also denoted by $|A|$.
+
+  The scalar
+  \begin{align*}
+    {(−1)}^{i+j} \det(\tilde{A}_{ij})
+  \end{align*}
+  is called the \bd{cofactor} of the entry of A in row i, column j.
+\end{definitions}
+
+Thus the determinant of A equals the sum of the products of each entry in row 1 of A multiplied by its cofactor. This formula is called \bd{cofactor expansion along the first row} of A.
+
+\begin{theorem}
+  The determinant of an n × n matrix is a linear function of each row when the remaining rows are held fixed. That is, for $1 \leq  r \leq n$, we have
+  \begin{align*}
+    \det \bpmat a_1\\\vdots\\a_{r-1}\\u+kv\\a_{r+1}\\\vdots\\a_n\epmat =\det \bpmat a_1\\\vdots\\a_{r-1}\\u\\a{r+1}\\\vdots\\a_n\epmat +k\det \bpmat a_1\\\vdots\\a_{r-1}\\v\\a_{r+1}\\\vdots\\a_n\epmat
+  \end{align*}
+  whenever k is a scalar and u, v, and each $a_i$ are row vectors in $F^n$.
+\end{theorem}
+
+\begin{corollary}
+  If $A \in M_{n\times n}(F)$ has a row consisting entirely of zeros, then $\det(A)=0$.
+\end{corollary}
+
+\begin{lemma1}
+  Let $B \in M_{n\times n}(F)$, where $n \geq 2$. If row i of B equals $e_k$ for some $k (1 \leq  k \leq n)$, then $\det(B)=(−1)^{i+k} \det(\tilde{B}_{ik})$.
+\end{lemma1}
+
+\begin{theorem}
+  The determinant of a square matrix can be evaluated by cofactor expansion along any row. That is, if $A \in M_{n\times n}(F)$, then for any integer $i (1 ≤ i ≤ n)$,
+  \begin{align*}
+    \det(A) = \sum_{j=1}^n {(-1)}^{i+j}A_{ij}\cdot \det(\tilde{A}_{ij})
+  \end{align*}
+\end{theorem}
+
+\begin{corollary}
+  If $A \in M_{n\times n}(F)$ has two identical rows, then $\det(A)=0$.
+\end{corollary}
+
+\begin{theorem}
+  If $A \in M_{n\times n}(F)$ and B is a matrix obtained from A by interchanging any two rows of A, then $\det(B) = − \det(A)$.
+\end{theorem}
+
+\begin{theorem}
+  Let $A \in M_{n\times n}(F)$, and let B be a matrix obtained by adding a multiple of one row of A to another row of A. Then $\det(B) = \det(A)$.
+\end{theorem}
+
+\begin{corollary}
+  If $A \in M_{n\times n}(F)$ has rank less than n, then $\det(A)=0$.
+\end{corollary}
+
+The following rules summarize the effect of an elementary row operation on the determinant of a matrix $A \in M_{n\times n}(F)$.
+
+(a) If B is a matrix obtained by interchanging any two rows of A, then $\det(B) = − \det(A)$.
+
+(b) If B is a matrix obtained by multiplying a row of A by a nonzero scalar k, then $\det(B) = k \det(A)$.
+
+(c) If B is a matrix obtained by adding a multiple of one row of A to another row of A, then $\det(B) = \det(A)$.
+
+The determinant of an upper triangular matrix is the product of its diagonal entries.
+
+\subsection{Properties of Determinants}
+
+Because the determinant of the n×n identity matrix is 1, we can interpret the statements on page 217 as the following facts about the determinants of elementary matrices.
+
+(a) If E is an elementary matrix obtained by interchanging any two rows of I, then det(E) = −1.
+
+(b) If E is an elementary matrix obtained by multiplying some row of I by the nonzero scalar k, then det(E) = k.
+
+(c) If E is an elementary matrix obtained by adding a multiple of some row of I to another row, then det(E) = 1.
+
+\begin{theorem}
+  For any $A, B \in M_{n\times n}(F)$, $\det(AB) = \det(A)\cdot \det(B)$.
+\end{theorem}
+
+\begin{corollary}
+  A matrix $A \in M_{n\times n}(F)$ is invertible if and only if $\det(A) \neq  0$. Furthermore, if A is invertible, then $\det(A^{-1}) = \frac{1}{\det(A)}$.
+\end{corollary}
+
+\begin{theorem}
+  For any $A \in M_{n\times n}(F)$, $\det(A^t) = \det(A)$.
+\end{theorem}
+
+\begin{theorem}[Cramer's Rule]
+  Let $Ax = b$ be the matrix form of a system of n linear equations in n unknowns, where $x = (x_1, x_2,\ldots,x_n)^t$. If $\det(A) \neq 0$, then this system has a unique solution, and for each $k (k =1, 2,\ldots,n)$,
+  \begin{align*}
+    x_k=\frac{\det(M_k)}{\det (A)}
+  \end{align*}
+  where $M_k$ is the $n \times n$ matrix obtained from A by replacing column k of A by b.
+\end{theorem}
+
+If the rows of A are $a_1, a_2,\ldots,a_n$, respectively, then $\lvert \det(A)\rvert$ is the \bd{n-dimensional volume} (the generalization of area in $R^2$ and volume in $R^3$) of the parallelepiped having the vectors $a_1, a_2,\ldots,a_n$ as adjacent sides.
+
+Specifically, if $\gamma$ is any ordered basis for $R^n$ and $\beta$ is the standard ordered basis for $R^n$, then $\gamma$ induces a right-handed coordinate system if and only if $\det(Q) > 0$, where Q is the change of coordinate matrix changing $\gamma$-coordinates into $\beta$-coordinates.
+
+\subsection{Summary - Important Facts about Determinants}
+
+If A and B are similar matrices, then $\det(A) = \det(B)$.
+
+\subsection{A Characterization of the Determinant*}
+
+\end{document}
