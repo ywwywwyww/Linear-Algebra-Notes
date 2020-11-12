@@ -1284,10 +1284,45 @@ These same conditions can be used to test if a square matrix A is diagonalizable
 
 \paragraph{Systems of Differential Equations}
 
-To be updated later.
+Use diagonalization to reformulate a differential equation system to many differential equations.
 
 \paragraph{Direct Sums*}
 
-To be updated later.
+\begin{definition1}
+Let $W_1, W_2,\ldots, W_k$ be subspaces of a vector space V. We define the \bd{sum} of these subspaces to be the set
+\begin{align*}
+  \{v_1+v_2+\cdots+v_k:v_i\in W_i~for~1\leq i\leq k\}
+\end{align*}
+which we denote by $W_1 + W_2 + \cdots + W_k$ or $\sum_{i=1}^k W_i$.
+\end{definition1}
+
+It is a simple exercise to show that the sum of subspaces of a vector space
+is also a subspace.
+
+\begin{definition1}
+  Let $W_1, W_2,\ldots, W_k$ be subspaces of a vector space V. We call V the \bd{direct sum} of the subspaces $W_1, W_2,\ldots, W_k$ and write $V = W_1 \oplus W_2 \oplus \cdots \oplus W_k$, if
+  \begin{align*}
+    V=\sum_{i=1}^k W_i
+  \end{align*}
+  and
+  \begin{align*}
+    W_j\cap \sum_{i\neq j}W_i=\{0\}~for~each~j(1\leq j\leq k)
+  \end{align*}
+\end{definition1}
+
+\begin{theorem}
+  Let $W_1, W_2,\ldots, W_k$ be subspaces of a finite-dimensional vector space V. The following conditions are equivalent.
+  \begin{enumerate}[label=(\alph*)]
+    \item $V=W_1\oplus W_2 \oplus \cdots \oplus W_k$.
+    \item $V=\sum_{i=1}^k W_i$ and, for any vectors $v_1,v_2,\ldots,v_k$ such that $v_i\in W_i(1\leq i\leq k)$, if $v_1+v_2+\cdots+v_k=0$, then $v_i=0$ for all i.
+    \item Each vector $v \in V$ can be uniquely written as $v = v_1 + v_2 + \cdots + v_k$, where $v_i \in W_i$.
+    \item If $\gamma_i$ is an ordered basis for $W_i (1 \leq i \leq k)$, then $\gamma_1 \cup \gamma_2 \cup\cdots\cup \gamma_k$ is an ordered basis for V.
+    \item For each $i = 1, 2,...,k$, there exists an ordered basis $\gamma_i$ for $W_i$ such that $\gamma_1 \cup \gamma_2 \cup\cdots\cup \gamma_k$ is an ordered basis for V.
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+  A linear operator T on a finite-dimensional vector space V is diagonalizable if and only if V is the direct sum of the eigenspaces of T.
+\end{theorem}
 
 \end{document}
