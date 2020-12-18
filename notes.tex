@@ -1896,4 +1896,166 @@ If $\lambda_1T_1 + \lambda_2T_2 + \cdots + \lambda_kT_k$ is the spectral decompo
 
 \subsection{Bilinear and Quadratic Forms*}
 
+\paragraph{Bilinear Forms}
+
+\begin{definition1}
+  Let V be a vector space over a field F. A function H from the set $V \times V$ of ordered pairs of vectors to F is called a \bd{bilinear form} on V if H is linear in each variable when the other variable is held fixed; that is, H is a bilinear form on V if
+  \enumalph
+  \item $H(ax_1 + x_2, y) = aH(x_1, y) + H(x_2, y)$ for all $x_1, x_2, y \in V$ and $a \in F$
+  \item $H(x, ay_1 + y_2) = aH(x, y_1) + H(x, y_2)$ for all $x, y_1, y_2 \in V$ and $a \in F$.
+  \end{enumerate}
+\end{definition1}
+
+We denote the set of all bilinear forms on V by $\mathcal B(V)$. Observe that an inner product on a vector space is a bilinear form if the underlying field is real, but not if the underlying field is complex.
+
+For any bilinear form H on a vector space V over a field F, the following properties hold.
+
+\begin{enumerate}
+  \item If, for any $x \in V$, the functions $L_x, R_x : V \to F$ are defined by
+  \begin{align*}
+    L_x(y) = H(x, y)\text{ and }R_x(y) = H(y, x)\text{ for all }y \in V
+  \end{align*}
+  then $L_x$ and $R_x$ are linear.
+  \item $H(0, x) = H(x, 0) = 0$ for all $x \in V$.
+  \item For all $x, y, z, w \in V$,
+  \begin{align*}
+    H(x + y, z + w) = H(x, z) + H(x, w) + H(y, z) + H(y, w)
+  \end{align*}
+  \item If $J : V \times V \to F$ is defined by $J(x, y) = H(y, x)$, then J is a bilinear form.
+\end{enumerate}
+
+\begin{definitions}
+  Let V be a vector space, let $H_1$ and $H_2$ be bilinear forms on V, and let a be a scalar. We define the \bd{sum} $H_1 + H_2$ and the \bd{scalar product} $aH_1$ by the equations
+  \begin{align*}
+    (H_1 + H_2)(x, y) = H_1(x, y) + H_2(x, y)
+  \end{align*}
+  and
+  \begin{align*}
+    (aH_1)(x, y) = a(H_1(x, y))\text{ for all }x, y \in V
+  \end{align*}
+\end{definitions}
+
+\begin{theorem}
+  For any vector space V, the sum of two bilinear forms and the product of a scalar and a bilinear form on V are again bilinear forms on V. Furthermore, $\mathcal B(V)$ is a vector space with respect to these operations.
+\end{theorem}
+
+Let $\beta = \{v_1, v_2, \ldots , v_n\}$ be an ordered basis for an n-dimensional vector space V, and let $H \in \mathcal B(V)$. We can associate with H an $n \times n$ matrix A whose entry in row i and column j is defined by
+\begin{align*}
+  A_{ij} = H(v_i, v_j)\text{ for }i,j = 1,2,\ldots,n
+\end{align*}
+
+\begin{definition1}
+  The matrix A above is called the \bd{matrix representation} of H with respect to the ordered basis $\beta$ and is denoted by $\psi_\beta(H)$.
+\end{definition1}
+
+\begin{theorem}
+  For any n-dimensional vector space V over F and any ordered basis $\beta$ for V, $\psi_\beta : \mathcal B(V) \to M_{n\times n}(F)$ is an isomorphism.
+\end{theorem}
+
+\begin{corollary1}
+  For any n-dimensional vector space V, $\mathcal B(V)$ has dimension $n^2$.
+\end{corollary1}
+
+\begin{corollary2}
+  Let V be an n-dimensional vector space over F with ordered basis $\beta$. If $H \in \mathcal B(V)$ and $A \in M_{n\times n}(F)$, then $\psi_\beta(H) = A$ if and only if $H(x, y) = [\phi_\beta(x)]^tA[\phi_\beta(y)]$ for all $x, y \in V$.
+\end{corollary2}
+
+\begin{corollary3}
+  Let F be a field, $n$ a positive integer, and $\beta$ be the standard ordered basis for $F^n$. Then for any $H \in \mathcal B(F^n)$, there exists a unique matrix $A \in M_{n\times n}(F)$, namely, $A = \psi_\beta(H)$, such that
+  \begin{align*}
+    H(x, y) = x^tAy\text{ for all }x, y \in F^n.
+  \end{align*}
+\end{corollary3}
+
+\begin{definition1}
+  Let $A, B \in M_{n\times n}(F)$. Then B is said to be \bd{congruent} to A if there exists an invertible matrix $Q \in M_{n\times n}(F)$ such that $B = Q^tAQ$.
+\end{definition1}
+
+Observe that the relation of congruence is an equivalence relation.
+
+\begin{theorem}
+  Let V be a finite-dimensional vector space with ordered bases $\beta = \{v_1, v_2, \ldots , v_n\}$ and $\gamma = \{w_1, w_2, \ldots , w_n\}$, and let Q be the change of coordinate matrix changing $\gamma$-coordinates into $\beta$-coordinates. Then, for any $H \in \mathcal B(V)$, we have $\psi_\gamma(H) = Q^t\psi_\beta(H)Q$. Therefore $\psi_\gamma(H)$ is congruent to $\psi_\beta(H)$.
+\end{theorem}
+
+\begin{corollary}
+  Let V be an n-dimensional vector space with ordered basis $\beta$, and let H be a bilinear form on V. For any $n \times n$ matrix B, if B is congruent to $\psi_\beta(H)$, then there exists an ordered basis $\gamma$ for V such that $\psi_\gamma(H) = B$. Furthermore, if $B = Q^t\psi_\beta(H)Q$ for some invertible matrix Q, then Q changes $\gamma$-coordinates into $\beta$-coordinates.
+\end{corollary}
+
+\paragraph{Symmetric Bilinear Forms}
+
+\begin{definition1}
+  A bilinear form H on a vector space V is \bd{symmetric} if $H(x, y) = H(y, x)$ for all $x, y \in V$.
+\end{definition1}
+
+\begin{theorem}
+  Let H be a bilinear form on a finite-dimensional vector space V, and let $\beta$ be an ordered basis for V. Then H is symmetric if and only if $\psi_\beta(H)$ is symmetric.
+\end{theorem}
+
+\begin{definition1}
+  A bilinear form H on a finite-dimensional vector space V is called \bd{diagonalizable} if there is an ordered basis $\beta$ for V such that $\psi_\beta(H)$ is a diagonal matrix.
+\end{definition1}
+
+\begin{corollary}
+  Let H be a diagonalizable bilinear form on a  finite-dimensional vector space V. Then H is symmetric.
+\end{corollary}
+
+\begin{lemma}
+  Let H be a nonzero symmetric bilinear form on a vector space
+V over a field F not of characteristic two. Then there is a vector x in V such that $H(x, x) \neq 0$.
+\end{lemma}
+
+\begin{theorem}
+  Let V be a finite-dimensional vector space over a field F not of characteristic two. Then every symmetric bilinear form on V is diagonalizable.
+\end{theorem}
+
+% \begin{proof}
+%   Let $dim(V) = n$ and $L_x : V \to F$ defined by $L_x(y) = H(x, y)$, then $dim(N(L_x)) = n-1$, and we can apply mathematical induction on $n$.
+% \end{proof}
+
+\begin{corollary}
+  Let F be a field that is not of characteristic two. If $A \in M_{n\times n}(F)$ is a symmetric matrix, then A is congruent to a diagonal matrix.
+\end{corollary}
+
+\paragraph{Diagonalization of Symmetric Matrices}
+
+.
+
+\paragraph{Quadratic Forms}
+
+\begin{definition1}
+  Let V be a vector space over F. A function $K : V \to F$ is called a \bd{quadratic form} if there exists a symmetric bilinear form $H \in \mathcal B(V)$ such that
+  \begin{align*}
+    K(x) = H(x, x)\text{ for all } x\in V
+  \end{align*}
+\end{definition1}
+
+If the field F is not of characteristic two, there is a one-to-one correspondence between symmetric bilinear forms and quadratic forms given by 
+\begin{align*}
+  H(x, y) = \frac{1}{2}[K(x+y)-K(x)-K(y)]
+\end{align*}
+
+\paragraph{Quadratic Forms Over the Field $R$}
+
+\begin{theorem}
+  Let V be a finite-dimensional real inner product space, and let H be a symmetric bilinear form on V. Then there exists an orthonormal basis $\beta$ for V such that $\psi_\beta(H)$ is a diagonal matrix.
+\end{theorem}
+
+\begin{corollary}
+  Let K be a quadratic form on a finite-dimensional real inner
+product space V. There exists an orthonormal basis $\beta = \{v_1, v_2, \ldots , v_n\}$ for V and scalars $\lambda_1, \lambda_2, \ldots , \lambda_n$ (not necessarily distinct) such that if $x \in V$ and
+\begin{align*}
+  x=\sum_{i=1}^n s_iv_i,~s_i\in R
+\end{align*}
+then
+\begin{align*}
+  K(x) = \sum_{i=1}^n \lambda_i s_i^2
+\end{align*}
+
+In fact, if H is the symmetric bilinear form determined by K, then $\beta$ can be chosen to be any orthonormal basis for V such that $\psi_\beta(H)$ is a diagonal matrix.
+\end{corollary}
+
+\paragraph{The Second Derivative Test for Functions of Several Variables} .
+
+\paragraph{Sylvester’s Law of Inertia} .
+
 \end{document}
